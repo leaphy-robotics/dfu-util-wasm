@@ -8,10 +8,14 @@ export default defineConfig({
     sourcemap: true,
     clean: true,
     dts: true,
+    esbuildOptions(options) {
+        if (!options.define) options.define = {}
+        options.define['import.meta'] = '{}'
+    },
     esbuildPlugins: [
         replace({
             patterns: [
-                [/ENVIRONMENT_IS_NODE(?! =)/g, 'false']
+                [/ENVIRONMENT_IS_NODE(?! =)/g, 'false'],
             ]
         })
     ]
