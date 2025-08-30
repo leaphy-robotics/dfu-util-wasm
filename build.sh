@@ -19,4 +19,4 @@ emmake make -j8
 cd ${SOURCE}
 mkdir ../build
 cp dfu-util/src/dfu-util ../build/dfu-util.js
-cp dfu-util/src/{dfu-util.wasm,dfu-util.worker.mjs} ../build
+cp dfu-util/src/dfu-util.wasm ../build
