@@ -44,7 +44,7 @@ export default class DFUUtil {
             new Promise<void>((_resolve, reject) => setTimeout(() => {
                 this.logs += "Timeout reached!\n"
                 reject(this.logs)
-            }, 30000)),
+            }, 3 * 60 * 1000)),
             new Promise<void>((resolve) => {
                 this.onDone = resolve
                 this.logs = ''
