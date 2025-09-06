@@ -21,11 +21,17 @@ export default class DFUUtil {
             },
             print: (text: string) => {
                 if (typeof this.onDone === 'undefined' || typeof this.logs === 'undefined') return
+                console.log(text)
                 this.logs += `${text}\n`
 
                 if (!text.includes('Resetting USB to switch back to Run-Time mode')) return
 
                 this.onDone()
+            },
+            printErr: (text: string) => {
+                if (typeof this.onDone === 'undefined' || typeof this.logs === 'undefined') return
+                console.log(text)
+                this.logs += `Error: ${text}\n`
             }
         })
     }
@@ -35,7 +41,10 @@ export default class DFUUtil {
         module.FS.writeFile('sketch.bin', sketch)
 
         return Promise.race([
-            new Promise<void>((_resolve, reject) => setTimeout(() => reject(this.logs), 10000)),
+            new Promise<void>((_resolve, reject) => setTimeout(() => {
+                this.logs += "Timeout reached!\n"
+                reject(this.logs)
+            }, 30000)),
             new Promise<void>((resolve) => {
                 this.onDone = resolve
                 this.logs = ''
